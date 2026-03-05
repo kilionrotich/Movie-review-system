@@ -1,0 +1,30 @@
+# Data artefacts (large pickle files and downloaded dataset)
+data/ml-latest-small/
+data/cf_model.pkl
+data/cbf_model.pkl
+data/recommender_state.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.eggs/
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
