@@ -41,7 +41,7 @@ def get_recommender() -> MovieRecommender:
     if os.path.exists(STATE_PATH) and os.path.exists(CF_PATH):
         rec.load(STATE_PATH)
     else:
-        st.info("First run: downloading data and training models. This may take a few minutes…")
+        st.info("App is warming up: downloading data and training models. This may take a few minutes…")
         rec.fit()
         rec.save(STATE_PATH)
     return rec
