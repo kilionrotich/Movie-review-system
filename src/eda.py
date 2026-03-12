@@ -4,10 +4,10 @@ Generates and saves plots; also returns summary statistics.
 """
 
 import os
-import pandas as pd
-import matplotlib.pyplot as plt
+
 import matplotlib
-import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
 
 matplotlib.use("Agg")
 
@@ -67,13 +67,12 @@ def genre_popularity(movies: pd.DataFrame, save: bool = True) -> plt.Figure:
     """Bar chart of movie counts by genre."""
     genre_counts: dict[str, int] = {}
     for genres in movies["genres_list"]:
-        for g in genres:
-            genre_counts[g] = genre_counts.get(g, 0) + 1
+        for genre in genres:
+            genre_counts[genre] = genre_counts.get(genre, 0) + 1
     genre_series = pd.Series(genre_counts).sort_values(ascending=False)
 
     fig, ax = plt.subplots(figsize=(12, 6))
-    sns.barplot(x=genre_series.values, y=genre_series.index, hue=genre_series.index,
-                ax=ax, palette="viridis", legend=False)
+    ax.barh(genre_series.index[::-1], genre_series.values[::-1], color="teal")
     ax.set_title("Movie Count by Genre")
     ax.set_xlabel("Number of Movies")
     ax.set_ylabel("Genre")
@@ -114,8 +113,7 @@ def top_rated_movies(
     )
     stats = stats.merge(movies[["movieId", "title"]], on="movieId")
     fig, ax = plt.subplots(figsize=(10, 8))
-    sns.barplot(data=stats, x="mean", y="title", hue="title", ax=ax, palette="Blues_d",
-                legend=False)
+    ax.barh(stats["title"][::-1], stats["mean"][::-1], color="royalblue")
     ax.set_title(f"Top {top_n} Highest-Rated Movies (min {min_ratings} ratings)")
     ax.set_xlabel("Mean Rating")
     ax.set_ylabel("")
@@ -130,14 +128,7 @@ def run_all_eda(
     movies: pd.DataFrame,
     save: bool = True,
 ) -> dict[str, object]:
-    """
-    Run all EDA functions and return figures + summary stats.
-
-    Returns
-    -------
-    dict
-        Keys: figure names → matplotlib Figure objects, plus 'summary' key.
-    """
+    """Run all EDA functions and return figures plus summary stats."""
     summary = {
         "num_ratings": len(ratings),
         "num_users": ratings["userId"].nunique(),

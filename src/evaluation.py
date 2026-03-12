@@ -1,62 +1,43 @@
 """
 Evaluation metrics for the Movie Recommendation System.
 
-Implements:
-- RMSE  (Root Mean Squared Error) for rating prediction
-- Precision@K and Recall@K for top-N recommendations
+Works with both surprise models and the built-in fallback model by only
+depending on the common `model.test(...)` prediction interface.
 """
 
 import numpy as np
-import pandas as pd
-from surprise import SVD, accuracy
-from surprise.model_selection import train_test_split
 
 
 def rmse(predictions: list) -> float:
-    """Compute RMSE from a list of surprise Prediction namedtuples."""
-    return float(accuracy.rmse(predictions, verbose=False))
+    """Compute RMSE from prediction objects exposing est and r_ui."""
+    if not predictions:
+        return 0.0
+    errors = np.array([pred.est - pred.r_ui for pred in predictions], dtype=float)
+    return float(np.sqrt(np.mean(np.square(errors))))
 
 
 def mae(predictions: list) -> float:
-    """Compute MAE from a list of surprise Prediction namedtuples."""
-    return float(accuracy.mae(predictions, verbose=False))
+    """Compute MAE from prediction objects exposing est and r_ui."""
+    if not predictions:
+        return 0.0
+    errors = np.array([abs(pred.est - pred.r_ui) for pred in predictions], dtype=float)
+    return float(errors.mean())
 
 
 def precision_at_k(
-    model: SVD,
+    model,
     testset: list,
     k: int = 10,
     threshold: float = 3.5,
 ) -> float:
-    """
-    Compute mean Precision@K across all users in the test set.
-
-    A recommendation is considered *relevant* if the true rating
-    is >= threshold.
-
-    Parameters
-    ----------
-    model : SVD
-        Trained surprise model.
-    testset : list
-        List of (uid, iid, true_rating) tuples.
-    k : int
-        Cutoff rank.
-    threshold : float
-        Minimum true rating to be counted as relevant.
-
-    Returns
-    -------
-    float
-        Mean Precision@K.
-    """
+    """Compute mean Precision@K across all users in the test set."""
     predictions = model.test(testset)
     user_preds: dict[str, list] = {}
     for pred in predictions:
         user_preds.setdefault(pred.uid, []).append((pred.est, pred.r_ui))
 
     precisions = []
-    for uid, preds in user_preds.items():
+    for preds in user_preds.values():
         preds.sort(key=lambda x: x[0], reverse=True)
         top_k = preds[:k]
         n_relevant = sum(1 for _, r_ui in top_k if r_ui >= threshold)
@@ -65,37 +46,19 @@ def precision_at_k(
 
 
 def recall_at_k(
-    model: SVD,
+    model,
     testset: list,
     k: int = 10,
     threshold: float = 3.5,
 ) -> float:
-    """
-    Compute mean Recall@K across all users in the test set.
-
-    Parameters
-    ----------
-    model : SVD
-        Trained surprise model.
-    testset : list
-        List of (uid, iid, true_rating) tuples.
-    k : int
-        Cutoff rank.
-    threshold : float
-        Minimum true rating to be counted as relevant.
-
-    Returns
-    -------
-    float
-        Mean Recall@K.
-    """
+    """Compute mean Recall@K across all users in the test set."""
     predictions = model.test(testset)
     user_preds: dict[str, list] = {}
     for pred in predictions:
         user_preds.setdefault(pred.uid, []).append((pred.est, pred.r_ui))
 
     recalls = []
-    for uid, preds in user_preds.items():
+    for preds in user_preds.values():
         n_relevant_total = sum(1 for _, r_ui in preds if r_ui >= threshold)
         if n_relevant_total == 0:
             continue
@@ -107,22 +70,19 @@ def recall_at_k(
 
 
 def evaluate_all(
-    model: SVD,
+    model,
     testset: list,
     k_values: list[int] | None = None,
     threshold: float = 3.5,
 ) -> dict:
-    """
-    Run the full evaluation suite.
-
-    Returns a dict with RMSE, MAE, and Precision@K / Recall@K for each k.
-    """
+    """Run the full evaluation suite."""
     if k_values is None:
         k_values = [5, 10, 20]
 
+    predictions = model.test(testset)
     metrics = {
-        "rmse": rmse(model.test(testset)),
-        "mae": mae(model.test(testset)),
+        "rmse": rmse(predictions),
+        "mae": mae(predictions),
     }
     for k in k_values:
         metrics[f"precision@{k}"] = precision_at_k(model, testset, k=k, threshold=threshold)

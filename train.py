@@ -21,6 +21,7 @@ from src.preprocessing import clean_movies, clean_tags
 
 def main() -> None:
     print("=" * 60)
+    
     print("Movie Recommendation System – Training")
     print("=" * 60)
 
