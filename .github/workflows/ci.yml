@@ -1,0 +1,43 @@
+name: CI - Deployment Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Install, Test & Smoke Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest tests/ -v
+
+      - name: Smoke-test app imports
+        run: |
+          python -c "import streamlit; print('streamlit: OK')"
+          python -c "from src.recommender import MovieRecommender; print('MovieRecommender: OK')"
+          python -c "
+          import ast, sys
+          with open('app.py') as f:
+              src = f.read()
+          ast.parse(src)
+          print('app.py syntax: OK')
+          "
