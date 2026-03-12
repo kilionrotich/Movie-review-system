@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎬 Movie Recommendation System</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      line-height: 1.6;
+    }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      padding: 80px 24px;
+      text-align: center;
+      border-bottom: 1px solid #21262d;
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); color: #ffffff; margin-bottom: 16px; }
+    .hero p  { font-size: clamp(1rem, 2.5vw, 1.25rem); color: #8b949e; max-width: 700px; margin: 0 auto 32px; }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity .2s, transform .1s;
+    }
+    .btn:hover  { opacity: .85; transform: translateY(-1px); }
+    .btn-primary   { background: #238636; color: #fff; margin-right: 12px; }
+    .btn-secondary { background: #21262d; color: #c9d1d9; border: 1px solid #30363d; }
+
+    /* ── Layout ───────────────────────────────────────────── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    section { padding: 64px 0; border-bottom: 1px solid #21262d; }
+    section:last-child { border-bottom: none; }
+    section h2 { font-size: 1.75rem; color: #e6edf3; margin-bottom: 32px; text-align: center; }
+
+    /* ── Feature cards ────────────────────────────────────── */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color: #58a6ff; transform: translateY(-3px); }
+    .card .icon { font-size: 2rem; margin-bottom: 12px; }
+    .card h3    { font-size: 1.05rem; color: #e6edf3; margin-bottom: 8px; }
+    .card p     { font-size: .9rem;   color: #8b949e; }
+
+    /* ── Modes table ──────────────────────────────────────── */
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #21262d; }
+    th { color: #8b949e; font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; }
+    td { color: #c9d1d9; }
+    tr:last-child td { border-bottom: none; }
+
+    /* ── Tech stack badges ────────────────────────────────── */
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 16px; }
+    .badge {
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: .85rem;
+      color: #c9d1d9;
+    }
+
+    /* ── Screenshot ───────────────────────────────────────── */
+    .screenshot { text-align: center; }
+    .screenshot img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid #30363d;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    }
+
+    /* ── Quick start ──────────────────────────────────────── */
+    .steps { counter-reset: step; list-style: none; max-width: 640px; margin: 0 auto; }
+    .steps li {
+      counter-increment: step;
+      position: relative;
+      padding: 0 0 24px 56px;
+    }
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #238636;
+      color: #fff;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .steps li h4 { color: #e6edf3; margin-bottom: 6px; }
+    code {
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: .875em;
+    }
+    pre {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin-top: 8px;
+    }
+    pre code { background: none; border: none; padding: 0; font-size: .875rem; }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: #484f58;
+      font-size: .875rem;
+    }
+    footer a { color: #58a6ff; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<div class="hero">
+  <div class="container">
+    <h1>🎬 Movie Recommendation System</h1>
+    <p>
+      A full-stack recommendation engine built on the <strong>MovieLens</strong> dataset,
+      combining <strong>SVD Collaborative Filtering</strong> and <strong>TF-IDF
+      Content-Based Filtering</strong> with an interactive Streamlit web app.
+    </p>
+    <a href="https://github.com/kilionrotich/Movie-review-system" class="btn btn-primary">
+      View on GitHub
+    </a>
+    <a href="https://github.com/kilionrotich/Movie-review-system#-quick-start" class="btn btn-secondary">
+      Quick Start
+    </a>
+  </div>
+</div>
+
+<!-- ══════════════════ SCREENSHOT ══════════════════ -->
+<section>
+  <div class="container screenshot">
+    <h2>📸 App Preview</h2>
+    <img
+      src="https://github.com/user-attachments/assets/81bde843-b5b1-43a2-bf64-09a6ff3c4c97"
+      alt="Movie Recommendation System screenshot"
+    />
+  </div>
+</section>
+
+<!-- ══════════════════ FEATURES ══════════════════ -->
+<section>
+  <div class="container">
+    <h2>✨ Features</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📥</div>
+        <h3>Data Loading</h3>
+        <p>Auto-downloads the MovieLens Small dataset; falls back to synthetic data when offline.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧹</div>
+        <h3>Data Cleaning</h3>
+        <p>Deduplication, invalid-rating removal, title and genre parsing.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>EDA Dashboard</h3>
+        <p>Rating distributions, genre popularity, activity over time and top-rated movies.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🤝</div>
+        <h3>Collaborative Filtering</h3>
+        <p>SVD matrix factorisation via <code>scikit-surprise</code> for personalised picks.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎭</div>
+        <h3>Content-Based Filtering</h3>
+        <p>TF-IDF on genres &amp; user tags with cosine-similarity ranking.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔀</div>
+        <h3>Hybrid Mode</h3>
+        <p>Weighted blend of CF and CBF scores for more robust recommendations.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📏</div>
+        <h3>Evaluation</h3>
+        <p>RMSE, MAE, Precision@K and Recall@K metrics on a held-out test set.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌐</div>
+        <h3>Streamlit App</h3>
+        <p>Interactive UI with 6 recommendation modes — no frontend knowledge needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ APP MODES ══════════════════ -->
+<section>
+  <div class="container">
+    <h2>🌐 App Modes</h2>
+    <table>
+      <thead>
+        <tr><th>Mode</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>🔍 Search &amp; Browse</td><td>Full-text title search with genre filter</td></tr>
+        <tr><td>👤 Recommend for User (CF)</td><td>Personalised recommendations using SVD</td></tr>
+        <tr><td>🎭 Similar Movies (CBF)</td><td>Find movies similar to a title via TF-IDF</td></tr>
+        <tr><td>❤️ Based on Liked Movies (CBF)</td><td>Recommendations from a list of liked titles</td></tr>
+        <tr><td>🔀 Hybrid Recommendations</td><td>Weighted blend of CF + CBF</td></tr>
+        <tr><td>📊 EDA Dashboard</td><td>Interactive exploratory data analysis</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════ QUICK START ══════════════════ -->
+<section>
+  <div class="container">
+    <h2>🚀 Quick Start</h2>
+    <ol class="steps">
+      <li>
+        <h4>Clone the repository</h4>
+        <pre><code>git clone https://github.com/kilionrotich/Movie-review-system.git
+cd Movie-review-system</code></pre>
+      </li>
+      <li>
+        <h4>Install dependencies</h4>
+        <pre><code>pip install -r requirements.txt</code></pre>
+      </li>
+      <li>
+        <h4>Train the models</h4>
+        <pre><code>python train.py</code></pre>
+      </li>
+      <li>
+        <h4>Launch the Streamlit app</h4>
+        <pre><code>streamlit run app.py</code></pre>
+        <p style="margin-top:8px;color:#8b949e;">Open <code>http://localhost:8501</code> in your browser.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════════════ TECH STACK ══════════════════ -->
+<section>
+  <div class="container">
+    <h2>📦 Tech Stack</h2>
+    <div class="badges">
+      <span class="badge">Python 3</span>
+      <span class="badge">Streamlit</span>
+      <span class="badge">pandas · numpy</span>
+      <span class="badge">scikit-learn</span>
+      <span class="badge">scikit-surprise (SVD)</span>
+      <span class="badge">matplotlib · seaborn</span>
+      <span class="badge">MovieLens dataset</span>
+      <span class="badge">pytest</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <p>
+    Built by <a href="https://github.com/kilionrotich">kilionrotich</a> ·
+    <a href="https://github.com/kilionrotich/Movie-review-system">Source on GitHub</a>
+  </p>
+</footer>
+
+</body>
+</html>
