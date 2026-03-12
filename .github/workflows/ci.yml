@@ -1,0 +1,48 @@
+name: CI - Deployment Check
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Tests & Deployment Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: python -m pytest tests/ -v --tb=short
+
+      - name: Smoke test - verify app modules import successfully
+        run: |
+          python - <<'EOF'
+          import sys, os
+          sys.path.insert(0, os.getcwd())
+          from src.preprocessing import clean_movies, clean_ratings, clean_tags, build_content_features
+          from src.content_based import build_tfidf_matrix, get_similar_movies
+          from src.evaluation import precision_at_k, recall_at_k
+          from src.recommender import MovieRecommender
+          print("All modules imported successfully.")
+          rec = MovieRecommender()
+          print("MovieRecommender instantiated successfully.")
+          EOF
+
+      - name: Deployment check passed
+        run: echo "✅ Deployment check passed – all tests and imports succeeded."
