@@ -22,8 +22,8 @@ from src.recommender import MovieRecommender
 # Page config
 # ──────────────────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="🎬 Movie Recommendation System",
-    page_icon="🎬",
+    page_title="Movie Recommendation System",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -52,17 +52,17 @@ rec = get_recommender()
 # ──────────────────────────────────────────────────────────────────────────────
 # Sidebar
 # ──────────────────────────────────────────────────────────────────────────────
-st.sidebar.title("🎬 Movie Recommender")
+st.sidebar.title("Movie Recommender")
 st.sidebar.markdown("---")
 mode = st.sidebar.radio(
     "Choose recommendation mode",
     [
-        "🔍 Search & Browse",
-        "👤 Recommend for User (CF)",
-        "🎭 Similar Movies (CBF)",
-        "❤️ Based on Liked Movies (CBF)",
-        "🔀 Hybrid Recommendations",
-        "📊 EDA Dashboard",
+        "Search & Browse",
+        "Recommend for User (CF)",
+        "Similar Movies (CBF)",
+        "Based on Liked Movies (CBF)",
+        "Hybrid Recommendations",
+        "EDA Dashboard",
     ],
 )
 st.sidebar.markdown("---")
@@ -99,11 +99,11 @@ def render_recommendations(df: pd.DataFrame, score_col: str = "score") -> None:
 # Main content
 # ──────────────────────────────────────────────────────────────────────────────
 
-st.title("🎬 Movie Recommendation System")
+st.title("Movie Recommendation System")
 st.caption("Powered by SVD Collaborative Filtering + TF-IDF Content-Based Filtering on MovieLens data.")
 
 # ── Search & Browse ──────────────────────────────────────────────────────────
-if mode == "🔍 Search & Browse":
+if mode == "Search & Browse":
     st.header("Search & Browse Movies")
 
     col1, col2 = st.columns([3, 1])
@@ -129,7 +129,7 @@ if mode == "🔍 Search & Browse":
         st.info("Enter a movie title or pick a genre to browse.")
 
 # ── Recommend for User (CF) ──────────────────────────────────────────────────
-elif mode == "👤 Recommend for User (CF)":
+elif mode == "Recommend for User (CF)":
     st.header("Collaborative Filtering – Personalised Recommendations")
     st.markdown(
         "Enter a **User ID** to get personalised recommendations based on ratings "
@@ -163,11 +163,11 @@ elif mode == "👤 Recommend for User (CF)":
         )
         title_col = "clean_title" if "clean_title" in user_ratings.columns else "title"
         top_user = user_ratings.nlargest(5, "rating")[[title_col, "rating"]]
-        with st.expander("📋 User's highest-rated movies (context)"):
+        with st.expander("User's highest-rated movies (context)"):
             st.dataframe(top_user.rename(columns={title_col: "title"}), hide_index=True)
 
 # ── Similar Movies (CBF) ─────────────────────────────────────────────────────
-elif mode == "🎭 Similar Movies (CBF)":
+elif mode == "Similar Movies (CBF)":
     st.header("Content-Based Filtering – Similar Movies")
     st.markdown("Find movies similar to a title you enjoy.")
 
@@ -190,7 +190,7 @@ elif mode == "🎭 Similar Movies (CBF)":
             render_recommendations(similar, score_col="similarity_score")
 
 # ── Based on Liked Movies ─────────────────────────────────────────────────────
-elif mode == "❤️ Based on Liked Movies (CBF)":
+elif mode == "Based on Liked Movies (CBF)":
     st.header("Content-Based Filtering – Based on Your Liked Movies")
     st.markdown(
         "Enter one or more movie titles you enjoy (comma-separated) and "
@@ -225,7 +225,7 @@ elif mode == "❤️ Based on Liked Movies (CBF)":
             render_recommendations(cbf_recs, score_col="similarity_score")
 
 # ── Hybrid ────────────────────────────────────────────────────────────────────
-elif mode == "🔀 Hybrid Recommendations":
+elif mode == "Hybrid Recommendations":
     st.header("Hybrid Recommendations (CF + CBF)")
     st.markdown(
         "Blend collaborative filtering (user behaviour) and content-based filtering "
@@ -274,7 +274,7 @@ elif mode == "🔀 Hybrid Recommendations":
             render_recommendations(hybrid_recs, score_col="score")
 
 # ── EDA Dashboard ─────────────────────────────────────────────────────────────
-elif mode == "📊 EDA Dashboard":
+elif mode == "EDA Dashboard":
     st.header("Exploratory Data Analysis Dashboard")
 
     ratings = rec.ratings

@@ -1,4 +1,4 @@
-# 🎬 Movie Recommendation System
+# Movie Recommendation System
 
 A full-stack Movie Recommendation System built on the **MovieLens** dataset.  
 It combines **Collaborative Filtering** (SVD matrix factorisation) and **Content-Based Filtering** (TF-IDF) with a **Streamlit** web app that lets users explore movies and get personalised recommendations.
@@ -7,22 +7,22 @@ It combines **Collaborative Filtering** (SVD matrix factorisation) and **Content
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---|---|
-| 📥 **Data Loading** | Auto-downloads MovieLens Small dataset; falls back to synthetic data offline |
-| 🧹 **Data Cleaning** | Deduplication, invalid-rating removal, title/genre parsing |
-| 📊 **EDA Dashboard** | Rating distributions, genre popularity, activity over time, top-rated movies |
-| 🤝 **Collaborative Filtering** | SVD matrix factorisation via `scikit-surprise` |
-| 🎭 **Content-Based Filtering** | TF-IDF on genres + user tags, cosine similarity |
-| 🔀 **Hybrid Mode** | Weighted blend of CF and CBF scores |
-| 📏 **Evaluation** | RMSE, MAE, Precision@K, Recall@K |
-| 🌐 **Streamlit App** | Interactive UI with 6 recommendation modes |
+| **Data Loading** | Auto-downloads MovieLens Small dataset; falls back to synthetic data offline |
+| **Data Cleaning** | Deduplication, invalid-rating removal, title/genre parsing |
+| **EDA Dashboard** | Rating distributions, genre popularity, activity over time, top-rated movies |
+| **Collaborative Filtering** | SVD matrix factorisation via `scikit-surprise` |
+| **Content-Based Filtering** | TF-IDF on genres + user tags, cosine similarity |
+| **Hybrid Mode** | Weighted blend of CF and CBF scores |
+| **Evaluation** | RMSE, MAE, Precision@K, Recall@K |
+| **Streamlit App** | Interactive UI with 6 recommendation modes |
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 Movie-review-system/
@@ -45,7 +45,7 @@ Movie-review-system/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Install dependencies
 
@@ -85,7 +85,7 @@ python -m pytest tests/ -v
 
 ---
 
-## 📊 Models & Evaluation
+## Models & Evaluation
 
 ### Collaborative Filtering (SVD)
 
@@ -113,20 +113,20 @@ Recommendations are ranked by cosine similarity of feature vectors.
 
 ---
 
-## 🌐 Streamlit App Modes
+## Streamlit App Modes
 
 | Mode | Description |
 |---|---|
-| 🔍 **Search & Browse** | Full-text title search + genre filter |
-| 👤 **Recommend for User (CF)** | Personalised recommendations using SVD |
-| 🎭 **Similar Movies (CBF)** | Find movies similar to a title via TF-IDF |
-| ❤️ **Based on Liked Movies (CBF)** | Recommendations from a list of liked titles |
-| 🔀 **Hybrid Recommendations** | Weighted blend of CF + CBF |
-| 📊 **EDA Dashboard** | Interactive exploratory data analysis |
+| **Search & Browse** | Full-text title search + genre filter |
+| **Recommend for User (CF)** | Personalised recommendations using SVD |
+| **Similar Movies (CBF)** | Find movies similar to a title via TF-IDF |
+| **Based on Liked Movies (CBF)** | Recommendations from a list of liked titles |
+| **Hybrid Recommendations** | Weighted blend of CF + CBF |
+| **EDA Dashboard** | Interactive exploratory data analysis |
 
 ---
 
-## 📦 Dependencies
+## Dependencies
 
 | Package | Purpose |
 |---|---|
@@ -140,14 +140,14 @@ Recommendations are ranked by cosine similarity of feature vectors.
 
 ---
 
-## 📁 Data
+## Data
 
 The system uses the **[MovieLens Small](https://grouplens.org/datasets/movielens/latest/)** dataset (~100K ratings, 9K movies, 600 users).  
 If the download fails (e.g., in an offline environment), a synthetic dataset with the same schema is generated automatically via `generate_sample_data.py`.
 
 ---
 
-## 🚀 GitHub Pages Deployment
+## GitHub Pages Deployment
 
 This repository now includes a GitHub Actions workflow to deploy a static site from `docs/` to GitHub Pages.
 
@@ -170,7 +170,7 @@ GitHub Pages hosts static content only. The full Streamlit app (`app.py`) needs 
 
 ---
 
-## ☁️ Streamlit Community Cloud Deployment
+## Streamlit Community Cloud Deployment
 
 This project is now configured for Streamlit Community Cloud.
 
