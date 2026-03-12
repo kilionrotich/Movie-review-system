@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Recommendation System</title>
+    <style>
+      :root {
+        --bg: #f7f3ea;
+        --surface: #fffaf0;
+        --ink: #152238;
+        --accent: #d97706;
+        --accent-2: #0f766e;
+        --line: #e7dbc2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Georgia, Cambria, "Times New Roman", serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 10% 10%, #fff6df 0%, transparent 38%),
+          radial-gradient(circle at 90% 85%, #e1f4f2 0%, transparent 34%),
+          var(--bg);
+      }
+
+      .wrap {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 2.5rem 1.25rem 4rem;
+      }
+
+      .hero {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 12px 30px rgba(21, 34, 56, 0.08);
+      }
+
+      h1 {
+        margin-top: 0;
+        margin-bottom: 0.6rem;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        line-height: 1.1;
+      }
+
+      p {
+        line-height: 1.6;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.2rem;
+      }
+
+      .btn {
+        display: inline-block;
+        text-decoration: none;
+        padding: 0.72rem 1rem;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        font-weight: 700;
+      }
+
+      .btn.primary {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .btn.secondary {
+        background: #fff;
+        color: var(--accent-2);
+        border-color: var(--accent-2);
+      }
+
+      .grid {
+        margin-top: 1.4rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 0.9rem;
+      }
+
+      .card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 1rem;
+      }
+
+      .note {
+        margin-top: 1rem;
+        padding: 0.9rem 1rem;
+        border-left: 4px solid var(--accent-2);
+        background: #eefaf8;
+        border-radius: 8px;
+      }
+
+      code {
+        background: #f2ecde;
+        padding: 0.15rem 0.35rem;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <section class="hero">
+        <h1>Movie Recommendation System</h1>
+        <p>
+          This GitHub Pages site is a static landing page for the project. The full
+          recommendation app is built with Streamlit and must run on a Python host.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn primary" href="https://github.com/kilionrotich/Movie-review-system" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
+          <a class="btn secondary" href="https://share.streamlit.io/" target="_blank" rel="noopener noreferrer">Deploy Streamlit App</a>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h3>What works on Pages</h3>
+            <p>Documentation, screenshots, and static HTML/CSS/JS.</p>
+          </article>
+          <article class="card">
+            <h3>What does not run on Pages</h3>
+            <p>Python backend execution such as <code>streamlit run app.py</code>.</p>
+          </article>
+          <article class="card">
+            <h3>Production path</h3>
+            <p>Host the Streamlit app on Streamlit Community Cloud, then link it here.</p>
+          </article>
+        </div>
+
+        <div class="note">
+          After GitHub Pages is enabled in repository settings, this page will be
+          published automatically from the <code>docs</code> artifact via GitHub Actions.
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

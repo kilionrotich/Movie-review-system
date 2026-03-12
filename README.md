@@ -144,3 +144,26 @@ Recommendations are ranked by cosine similarity of feature vectors.
 
 The system uses the **[MovieLens Small](https://grouplens.org/datasets/movielens/latest/)** dataset (~100K ratings, 9K movies, 600 users).  
 If the download fails (e.g., in an offline environment), a synthetic dataset with the same schema is generated automatically via `generate_sample_data.py`.
+
+---
+
+## 🚀 GitHub Pages Deployment
+
+This repository now includes a GitHub Actions workflow to deploy a static site from `docs/` to GitHub Pages.
+
+### Included files
+
+- `.github/workflows/deploy-pages.yml`
+- `docs/index.html`
+- `docs/.nojekyll`
+
+### Publish steps
+
+1. Push to `main`.
+2. In GitHub, go to **Settings → Pages**.
+3. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+4. Wait for the **Deploy GitHub Pages** workflow to complete.
+
+### Important note
+
+GitHub Pages hosts static content only. The full Streamlit app (`app.py`) needs a Python runtime host such as Streamlit Community Cloud, Render, or Railway.
