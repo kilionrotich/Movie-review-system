@@ -75,7 +75,20 @@ This will:
 streamlit run app.py
 ```
 
-Open `http://localhost:8501` in your browser.
+Open **`http://localhost:8501`** in your browser.
+
+> **Tip:** If you are running the app on a remote server or cloud VM, replace `localhost` with your server's IP address or hostname, e.g. `http://<your-server-ip>:8501`.  
+> The `.streamlit/config.toml` file already configures Streamlit to listen on all interfaces (`0.0.0.0`) so the app is reachable from outside the machine.
+
+### Deploying to Streamlit Community Cloud
+
+1. Push this repository to GitHub.
+2. Go to [share.streamlit.io](https://share.streamlit.io) and sign in with your GitHub account.
+3. Click **New app**, select this repository, set the branch and the main file path to `app.py`, then click **Deploy**.
+4. Streamlit will build and deploy your app; your public URL will be in the format:  
+   `https://<github-username>-<repo-name>-app-<hash>.streamlit.app`
+
+> **Common cause of 404:** If you visit the URL before the app finishes building, or if the app crashed due to a missing dependency, Streamlit returns a 404 page. Wait for the build to complete (shown in the Streamlit Cloud dashboard) and check the logs if the error persists.
 
 ### 4. Run tests
 
