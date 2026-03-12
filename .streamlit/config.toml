@@ -1,0 +1,7 @@
+[server]
+headless = true
+port = 8501
+baseUrlPath = "Movie-review-system"
+
+[browser]
+gatherUsageStats = false
