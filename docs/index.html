@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Recommendation System</title>
+    <title>Movie Recommendation System – Deployment Status</title>
     <style>
       :root {
         --bg: #f7f3ea;
@@ -114,33 +114,69 @@
       <section class="hero">
         <h1>Movie Recommendation System</h1>
         <p>
-          This GitHub Pages site is a static landing page for the project. The full
-          recommendation app is built with Streamlit and must run on a Python host.
+          A full-stack recommendation engine combining SVD Collaborative Filtering and
+          TF-IDF Content-Based Filtering on the MovieLens dataset, served via Streamlit.
         </p>
 
         <div class="cta-row">
           <a class="btn primary" href="https://github.com/kilionrotich/Movie-review-system" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
-          <a class="btn secondary" href="https://share.streamlit.io/" target="_blank" rel="noopener noreferrer">Deploy Streamlit App</a>
+          <a class="btn secondary" href="https://share.streamlit.io/" target="_blank" rel="noopener noreferrer">Deploy on Streamlit Cloud</a>
         </div>
 
         <div class="grid">
           <article class="card">
-            <h3>What works on Pages</h3>
-            <p>Documentation, screenshots, and static HTML/CSS/JS.</p>
+            <h3>CI Status</h3>
+            <p>
+              <a href="https://github.com/kilionrotich/Movie-review-system/actions/workflows/ci.yml" target="_blank" rel="noopener noreferrer">
+                <img src="https://github.com/kilionrotich/Movie-review-system/actions/workflows/ci.yml/badge.svg" alt="CI - Deployment Check">
+              </a>
+            </p>
+            <p>Tests run on every push to verify the app builds and imports correctly.</p>
           </article>
           <article class="card">
-            <h3>What does not run on Pages</h3>
-            <p>Python backend execution such as <code>streamlit run app.py</code>.</p>
+            <h3>GitHub Pages</h3>
+            <p>
+              <a href="https://github.com/kilionrotich/Movie-review-system/actions/workflows/deploy-pages.yml" target="_blank" rel="noopener noreferrer">
+                <img src="https://github.com/kilionrotich/Movie-review-system/actions/workflows/deploy-pages.yml/badge.svg" alt="Deploy GitHub Pages">
+              </a>
+            </p>
+            <p>This static landing page deploys automatically on push to <code>main</code>.</p>
           </article>
           <article class="card">
-            <h3>Production path</h3>
-            <p>Host the Streamlit app on Streamlit Community Cloud, then link it here.</p>
+            <h3>Streamlit App</h3>
+            <p>
+              Deploy the interactive app on
+              <a href="https://share.streamlit.io/" target="_blank" rel="noopener noreferrer">Streamlit Community Cloud</a>
+              by pointing it at <code>app.py</code> on the <code>main</code> branch.
+            </p>
+          </article>
+        </div>
+
+        <div class="grid" style="margin-top:1rem;">
+          <article class="card">
+            <h3>Deployment Files</h3>
+            <ul style="padding-left:1.2rem;margin:0;">
+              <li><code>requirements.txt</code> – pinned dependencies</li>
+              <li><code>runtime.txt</code> – Python 3.12</li>
+              <li><code>.streamlit/config.toml</code> – server config</li>
+              <li><code>.github/workflows/ci.yml</code> – CI check</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Quick Deploy to Streamlit Cloud</h3>
+            <ol style="padding-left:1.2rem;margin:0;">
+              <li>Go to <a href="https://share.streamlit.io/" target="_blank" rel="noopener noreferrer">share.streamlit.io</a></li>
+              <li>Sign in with GitHub</li>
+              <li>New app &rarr; <code>kilionrotich/Movie-review-system</code></li>
+              <li>Branch: <code>main</code>, File: <code>app.py</code></li>
+              <li>Click <strong>Deploy</strong></li>
+            </ol>
           </article>
         </div>
 
         <div class="note">
-          After GitHub Pages is enabled in repository settings, this page will be
-          published automatically from the <code>docs</code> artifact via GitHub Actions.
+          GitHub Pages hosts static content only. The full Streamlit app requires a
+          Python host such as Streamlit Community Cloud.
         </div>
       </section>
     </main>
