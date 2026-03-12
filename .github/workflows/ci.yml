@@ -2,42 +2,47 @@ name: CI - Deployment Check
 
 on:
   push:
-    branches: [main]
+    branches: ["main", "master"]
   pull_request:
-    branches: [main]
+    branches: ["main", "master"]
+  workflow_dispatch:
 
 jobs:
   test:
-    name: Install, Test & Smoke Check
+    name: Run Tests & Deployment Check
     runs-on: ubuntu-latest
     permissions:
       contents: read
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
+          cache: "pip"
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
-      - name: Run tests
-        run: python -m pytest tests/ -v
+      - name: Run unit tests
+        run: python -m pytest tests/ -v --tb=short
 
-      - name: Smoke-test app imports
+      - name: Smoke test - verify app modules import successfully
         run: |
-          python -c "import streamlit; print('streamlit: OK')"
-          python -c "from src.recommender import MovieRecommender; print('MovieRecommender: OK')"
-          python -c "
-          import ast, sys
-          with open('app.py') as f:
-              src = f.read()
-          ast.parse(src)
-          print('app.py syntax: OK')
-          "
+          python - <<'EOF'
+          import sys, os
+          sys.path.insert(0, os.getcwd())
+          from src.preprocessing import clean_movies, clean_ratings, clean_tags, build_content_features
+          from src.content_based import build_tfidf_matrix, get_similar_movies
+          from src.evaluation import precision_at_k, recall_at_k
+          from src.recommender import MovieRecommender
+          print("All modules imported successfully.")
+          rec = MovieRecommender()
+          print("MovieRecommender instantiated successfully.")
+          EOF
+
+      - name: Deployment check passed
+        run: echo "Deployment check passed - all tests and imports succeeded."
