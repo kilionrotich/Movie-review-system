@@ -167,3 +167,28 @@ This repository now includes a GitHub Actions workflow to deploy a static site f
 ### Important note
 
 GitHub Pages hosts static content only. The full Streamlit app (`app.py`) needs a Python runtime host such as Streamlit Community Cloud, Render, or Railway.
+
+---
+
+## ☁️ Streamlit Community Cloud Deployment
+
+This project is now configured for Streamlit Community Cloud.
+
+### Included deployment files
+
+- `requirements.txt` (cloud-safe dependency set)
+- `runtime.txt` (`python-3.11`)
+
+### Deploy steps
+
+1. Go to [share.streamlit.io](https://share.streamlit.io/) and sign in with GitHub.
+2. Click **New app**.
+3. Select repository: `kilionrotich/Movie-review-system`.
+4. Branch: `main`.
+5. Main file path: `app.py`.
+6. Click **Deploy**.
+
+If deployment asks for app settings manually, use:
+
+- Python version: `3.11`
+- Entrypoint: `app.py`
