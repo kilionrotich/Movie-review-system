@@ -112,35 +112,50 @@
   <body>
     <main class="wrap">
       <section class="hero">
-        <h1>Movie Recommendation System</h1>
+        <h1>🎬 Movie Recommendation System</h1>
         <p>
-          This GitHub Pages site is a static landing page for the project. The full
-          recommendation app is built with Streamlit and must run on a Python host.
+          A full-stack recommendation system built on the <strong>MovieLens</strong> dataset, combining
+          <strong>Collaborative Filtering</strong> (SVD matrix factorisation) and
+          <strong>Content-Based Filtering</strong> (TF-IDF cosine similarity) with an interactive
+          <strong>Streamlit</strong> web app.
         </p>
 
         <div class="cta-row">
-          <a class="btn primary" href="https://github.com/kilionrotich/Movie-review-system" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
-          <a class="btn secondary" href="https://share.streamlit.io/" target="_blank" rel="noopener noreferrer">Deploy Streamlit App</a>
+          <a class="btn primary" href="https://github.com/kilionrotich/Movie-review-system" target="_blank" rel="noopener noreferrer">📦 GitHub Repo</a>
+          <a class="btn secondary" href="https://kilionrotich.github.io/Movie-review-system/" target="_blank" rel="noopener noreferrer">🌐 GitHub Pages</a>
+          <a class="btn secondary" href="https://github.com/kilionrotich/Movie-review-system/blob/main/notebooks/Movie_Review_System_Analysis.ipynb" target="_blank" rel="noopener noreferrer">📓 Analysis Notebook</a>
         </div>
 
         <div class="grid">
           <article class="card">
-            <h3>What works on Pages</h3>
-            <p>Documentation, screenshots, and static HTML/CSS/JS.</p>
+            <h3>🎯 Objective</h3>
+            <p>Personalised movie recommendations combining Collaborative Filtering (SVD) and Content-Based Filtering (TF-IDF) on the MovieLens dataset.</p>
           </article>
           <article class="card">
-            <h3>What does not run on Pages</h3>
-            <p>Python backend execution such as <code>streamlit run app.py</code>.</p>
+            <h3>📊 EDA &amp; Insights</h3>
+            <p>6 automated plots covering rating distributions, genre popularity, user activity, and matrix sparsity (&gt;98%).</p>
           </article>
           <article class="card">
-            <h3>Production path</h3>
-            <p>Host the Streamlit app on Streamlit Community Cloud, then link it here.</p>
+            <h3>🤖 Models</h3>
+            <p>SVD matrix factorisation (RMSE ≈ 0.52) + TF-IDF cosine similarity. Hybrid mode blends both for robust results.</p>
+          </article>
+          <article class="card">
+            <h3>📈 Evaluation</h3>
+            <p>RMSE, MAE, Precision@K, Recall@K on a 20% held-out test set. Precision@5 ≈ 84%, Recall@20 ≈ 97%.</p>
+          </article>
+          <article class="card">
+            <h3>🛠️ Tech Stack</h3>
+            <p>Python · Streamlit · scikit-learn · scikit-surprise · pandas · matplotlib · seaborn</p>
+          </article>
+          <article class="card">
+            <h3>📓 Documentation</h3>
+            <p>Full analysis notebook covering dataset description, cleaning, EDA, feature engineering, modelling, and insights.</p>
           </article>
         </div>
 
         <div class="note">
-          After GitHub Pages is enabled in repository settings, this page will be
-          published automatically from the <code>docs</code> artifact via GitHub Actions.
+          The live Streamlit app is hosted on Streamlit Community Cloud.
+          GitHub Pages serves this static landing page automatically via GitHub Actions from the <code>docs/</code> folder.
         </div>
       </section>
     </main>

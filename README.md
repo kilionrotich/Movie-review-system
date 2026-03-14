@@ -5,6 +5,14 @@ It combines **Collaborative Filtering** (SVD matrix factorisation) and **Content
 
 ![App Screenshot](https://github.com/user-attachments/assets/81bde843-b5b1-43a2-bf64-09a6ff3c4c97)
 
+## Live Demo
+
+| Resource | Link |
+|---|---|
+| **GitHub Repo** | https://github.com/kilionrotich/Movie-review-system |
+| **GitHub Pages** | https://kilionrotich.github.io/Movie-review-system/ |
+| **Analysis Notebook** | [`notebooks/Movie_Review_System_Analysis.ipynb`](notebooks/Movie_Review_System_Analysis.ipynb) |
+
 ---
 
 ## Features
